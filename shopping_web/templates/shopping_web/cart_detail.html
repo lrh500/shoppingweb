@@ -3,35 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <title>Cart Detail</title>
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <h1>Cart Detail</h1>
-    {% if cart_items %}
-    <table>
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in cart_items %}
-            <tr>
-                <td>{{ item.product.producttitle }}</td>
-                <td>{{ item.quantity }}</td>
-                <td>{{ item.total_price }}</td>
-            </tr>
-            {% endfor %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Clothes Market</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/product_list">Product</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/compare">Compare</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/cart_detail">My Cart</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/register">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
+    <header class="bg-info text-white text-center py-5">
+        <h1>Cart Detail</h1>
+    </header>
 
-        </tbody>
-    </table>
+    <div class="container mt-5">
+        {% if cart_items %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <td><img src="{{ item.product.imageURL }}" alt="{{ item.product.producttitle }}" style="width: 100px; height: 100px;"></td>
+                    <td>{{ item.product.producttitle }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>${{ item.total_price }}</td>
+                    <td>
+                        <a href="{% url 'cart_remove' item.product_id%}" class="btn btn-danger">Remove</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'clear_cart' %}" class="btn btn-warning">Clear Cart</a>
+        <a href="/checkout" class="btn btn-warning" style="background-color: dodgerblue;">Check Out</a>
+        {% else %}
+        <p>Your cart is empty.</p>
+        {% endif %}
+    </div>
 
-
-    {% else %}
-    <p>Your cart is empty.</p>
-    {% endif %}
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2023 Clothes Market. All rights reserved.</p>
+    </footer>
 </body>
 </html>

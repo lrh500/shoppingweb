@@ -1,44 +1,124 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
 </head>
 <body>
-    <h1>Product List</h1>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Clothes Market</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/product_list">Product</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/compare">Compare</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/cart_detail">My Cart</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/register">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-    <form action="" method="get">
-        <input type="text" name="q" placeholder="Search..." value="{{ request.GET.q }}">
-        <select name="category">
-            <option value="">All Categories</option>
-            <option value="Footwear" {% if request.GET.category == 'Footwear' %} selected {% endif %}>Footwear</option>
-            <option value="Apparel" {% if request.GET.category == 'Apparel' %} selected {% endif %}>Apparel</option>
-        </select>
-        <select name="gender">
-            <option value="">All Genders</option>
-            <option value="Girls" {% if request.GET.gender == 'Girls' %} selected {% endif %}>Girls</option>
-            <option value="Boys" {% if request.GET.gender == 'Boys' %} selected {% endif %}>Boys</option>
-            <option value="Men" {% if request.GET.gender == 'Men' %} selected {% endif %}>Men</option>
-            <option value="Women" {% if request.GET.gender == 'Women' %} selected {% endif %}>Women</option>
-        </select>
-        <button type="submit">Search</button>
-    </form>
 
-    {% if product_details %}
-    <ul>
-        {% for product in product_details %}
-        <li>
-            <b><a href="/product_details/{{product.productId}}">{{ product.producttitle }}</a></b><br>
-            Category: {{ product.category }}<br>
-            Sub-Category: {{ product.subCategory }}<br>
-            Gender: {{ product.gender }}<br>
-            Product Type: {{ product.productType }}<br>
-            Colour: {{ product.colour }}<br>
-            Usage: {{ product.usage }}<br>
-        </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p>No products found.</p>
-    {% endif %}
 
+    <div class="container">
+        <h1 class="my-4">Product List</h1>
+
+        <form action="" method="get" class="form-inline mb-4">
+            <input type="text" name="q" class="form-control mr-2" placeholder="Search..." value="{{ request.GET.q }}">
+            <select name="category" class="form-control mr-2">
+                <option value="">All Categories</option>
+                <option value="Footwear" {% if request.GET.category == 'Footwear' %} selected {% endif %}>Footwear</option>
+                <option value="Apparel" {% if request.GET.category == 'Apparel' %} selected {% endif %}>Apparel</option>
+            </select>
+            <select name="gender" class="form-control mr-2">
+                <option value="">All Genders</option>
+                <option value="Girls" {% if request.GET.gender == 'Girls' %} selected {% endif %}>Girls</option>
+                <option value="Boys" {% if request.GET.gender == 'Boys' %} selected {% endif %}>Boys</option>
+                <option value="Men" {% if request.GET.gender == 'Men' %} selected {% endif %}>Men</option>
+                <option value="Women" {% if request.GET.gender == 'Women' %} selected {% endif %}>Women</option>
+            </select>
+             <select name="usage" class="form-control mr-2">
+                <option value="">All Usage</option>
+                <option value="Sports" {% if request.GET.gender == 'Sports' %} selected {% endif %}>Sports</option>
+                <option value="Casual" {% if request.GET.gender == 'Casual' %} selected {% endif %}>Casual</option>
+                <option value="Formal" {% if request.GET.gender == 'Formal' %} selected {% endif %}>Formal</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+
+        {% if product_details %}
+        <div class="list-group">
+            {% for product in product_details %}
+            <a href="/product_details/{{product.productId}}" class="list-group-item list-group-item-action">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="{{ product.imageURL }}" alt="{{ product.producttitle }}" class="img-fluid">
+                        <h5 class="mb-1">{{ product.producttitle }}</h5>
+                        <small>Category: {{ product.category }}</small><br>
+                        <small>Sub-Category: {{ product.subCategory }}</small><br>
+                        <small>Gender: {{ product.gender }}</small><br>
+                        <small>Product Type: {{ product.productType }}</small><br>
+                        <small>Colour: {{ product.colour }}</small><br>
+                        <small>Usage: {{ product.usage }}</small>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="lead">${{ product.price }}</p>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+
+        <nav aria-label="Page navigation" class="mt-4">
+            <ul class="pagination">
+                <li class="page-item {% if page_obj.has_previous == False %} disabled {% endif %}">
+                    <a class="page-link" href="?page=1" tabindex="-1">First</a>
+                </li>
+                <li class="page-item {% if page_obj.has_previous == False %} disabled {% endif %}">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
+                </li>
+                {% for i in paginator.page_range %}
+                <li class="page-item {% if page_obj.number == i %} active {% endif %}">
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                </li>
+                {% endfor %}
+                <li class="page-item {% if page_obj.has_next == False %} disabled {% endif %}">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                </li>
+                <li class="page-item {% if page_obj.has_next == False %} disabled {% endif %}">
+                    <a class="page-link" href="?page={{ paginator.num_pages }}">Last</a>
+                </li>
+            </ul>
+        </nav>
+        {% else %}
+        <p>No products found.</p>
+        {% endif %}
+    </div>
 </body>
 </html>
+

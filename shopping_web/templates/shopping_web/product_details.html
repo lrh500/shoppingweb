@@ -6,92 +6,93 @@
 <head>
     <meta charset="utf-8">
     <title>Clothes Market</title>
-    <style>
-        body {
-            background-size: 60%;
-            background-position: center;
-        }
-
-        h1 {
-            font-size: 100px;
-            text-align: center;
-        }
-
-        nav {
-            font: menu;
-            font-weight: bold;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            width: 0%;
-            margin: 0 auto;
-            padding: 0px;
-            background-color: gray;
-        }
-
-        a {
-            display: inline-block;
-            padding: 20px;
-            color: black;
-            text-decoration: none;
-        }
-
-        .img-style {
-            width: 100%;
-            height: auto;
-            position: relative;
-        }
-
-        .caption {
-            position: absolute;
-            top: 5%;
-            left: 0;
-            width: 100%;
-        }
-    </style>
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-    <div>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/">About</a>
-            <a href="/product_list">Product</a>
-        </nav>
-    </div>
-    <div class="homepage">
-        <img src="{% static 'images/homepage.png' %}" class="img-style" alt="image">
-    </div>
-    <div class="caption">
-        <h1>Welcome to the Clothes market</h1>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Clothes Market</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/product_list">Product</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/compare">Compare</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/cart_detail">My Cart</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/register">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="bg-info text-white text-center py-5">
+        <h1>Welcome to the Clothes Market</h1>
+    </header>
+
+    <div class="container mt-5">
         {% if product_details %}
-        {% for row in product_details %}
-        <tr>
-            <td>{{ row.gender }}</td>
-            <td><b><a href='/check_by_date/{{row.category}}'>{{ row.category }}</a></b></td>
-            <td>{{ row.subCategory }}</td>
-            <td>{{ row.productType }}</td>
-            <td>{{ row.colour }}</td>
-            <td>{{ row.usage }}</td>
-            <td>{{ row.producttitle }}</td>
-            <b><a href='/cart_add/{{row.productId}}'>Add to cart</a></b>
-            <td>{{ row.price }}</td>
-        </tr>
-        {% endfor %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Gender</th>
+                    <th>Category</th>
+                    <th>Sub-Category</th>
+                    <th>Product Type</th>
+                    <th>Colour</th>
+                    <th>Usage</th>
+                    <th>Product Title</th>
+                    <th>Add to Cart</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in product_details %}
+                <tr>
+                    <td><img src="{{ row.imageURL }}" alt="{{ row.producttitle }}" style="width: 100px; height: 100px;"></td>
+                    <td>{{ row.gender }}</td>
+                    <td>{{ row.category }}</td>
+                    <td>{{ row.subCategory }}</td>
+                    <td>{{ row.productType }}</td>
+                    <td>{{ row.colour }}</td>
+                    <td>{{ row.usage }}</td>
+                    <td>{{ row.producttitle }}</td>
+                    <td><b><a href='/cart_add/{{row.productId}}' class="btn btn-primary">Add to cart</a></b></td>
+                    <td>${{ row.price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
         {% else %}
         <p>No product details found.</p>
         {% endif %}
 
     </div>
-    <nav>
-        <a href="/">Home</a>
-        <a href="/">About</a>
-        <a href="/product_list">Product</a>
-    </nav>
+
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2023 Clothes Market. All rights reserved.</p>
+    </footer>
 </body>
 
 </html>

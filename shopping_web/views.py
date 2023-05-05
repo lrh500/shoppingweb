@@ -6,6 +6,11 @@ from django.views.decorators.http import require_POST
 from .forms import RegisterForm, LoginForm,CartItemForm
 from django.contrib import messages
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+import pandas as pd
+import matplotlib.pyplot as plt
+import mpld3
+
 
 
 def index(request):
@@ -107,7 +112,7 @@ def user_logout(request):
     except Exception as e:
         return HttpResponseServerError(e)
 
-
+@login_required
 def cart_detail(request):
     try:
         cart = Cart.objects.get(user=request.user)
@@ -158,7 +163,56 @@ def cart_remove(request, product_id):
         cart_item.delete()
     return redirect('cart_detail')
 
-#def cart_detail(request):
-#    cart = Cart.objects.get(user=request.user)
-#    cart_items = cart.items.all()
-#    return render(request, 'shopping_web/cart_detail.html', {'cart': cart, 'cart_items': cart_items})
+def clear_cart(request):
+    user = request.user
+    try:
+        cart = Cart.objects.get(user=user)
+        cart_items = CartItem.objects.filter(cart=cart)
+        cart_items.delete()
+        return redirect('cart_detail')
+    except Cart.DoesNotExist:
+        return redirect('cart_detail')
+
+@login_required
+def checkout(request):
+    cart = Cart.objects.get(user=request.user)
+    items = cart.items.all()
+    total_price = cart.total_price
+    return render(request,'shopping_web/checkout.html')
+
+
+def compare(request):
+    if request.method == 'POST':
+        products1 = request.POST.get('products')
+        products2 = request.POST.get('products2')
+
+        if not products1 or not products2:
+            messages.error(request, 'Please select 2 products to compare.')
+            return redirect('compare')
+
+        data = {
+            products1: list(Product.objects.filter(producttitle=products1).values_list('price', flat=True)),
+            products2: list(Product.objects.filter(producttitle=products2).values_list('price', flat=True))
+        }
+
+        df = pd.DataFrame(data)
+
+        ax = df.plot(kind='bar', rot=0, figsize=(10, 6))
+        ax.set_xlabel('Product')
+        ax.set_ylabel('Price')
+        ax.set_title('Comparison of selected products')
+        ax.set_xticks(range(len(df.columns)))
+        ax.set_xticklabels(df.columns)
+
+        html = mpld3.fig_to_html(ax.figure)
+        products = Product.objects.values_list('producttitle', flat=True)
+        return render(request, 'shopping_web/compare.html', {'html': html, 'products': products})
+
+    else:
+        products = Product.objects.values_list('producttitle', flat=True)
+        return render(request, 'shopping_web/compare.html', {'products': products})
+
+
+
+
+
