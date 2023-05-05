@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-*))l+$83x4w7q(4u7!_$!rk*v^v2+9b6jwgpqt!aqx@@(lzp&k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','https://actorpuzzle-erosioncontrol-8000.codio-box.uk','127.0.0.1']
+ALLOWED_HOSTS = ['localhost','https://actorpuzzle-erosioncontrol-8000.codio-box.uk','127.0.0.1','solo-assessment.onrender.com']
 
 
 # Application definition
