@@ -6,6 +6,8 @@
 </head>
 <body>
     <h1>Add to Cart</h1>
+    <p>Product: {{ product.producttitle }}</p>
+    <p>Price: ${{ product.price }}</p>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}

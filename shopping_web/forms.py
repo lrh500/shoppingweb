@@ -18,7 +18,7 @@ class LoginForm(AuthenticationForm):
 class CartItemForm(forms.ModelForm):
     class Meta:
         model = CartItem
-        fields = ['product', 'quantity']
+        fields = [ 'quantity']
         widgets = {
             'quantity': forms.TextInput(attrs={'class': 'form-control', 'type': 'number', 'min': '1', 'value': '1'}),
         }

@@ -83,6 +83,8 @@ def register_fail(request):
     return render(request, 'shopping_web/error.html')
 
 def user_login(request):
+    if request.user.is_authenticated:
+        return redirect('/')
     try:
         if request.method == 'POST':
             form = LoginForm(request, request.POST)
@@ -100,7 +102,8 @@ def user_login(request):
 def user_logout(request):
     try:
         logout(request)
-        return redirect('/')
+        form = LoginForm()
+        return render(request, 'shopping_web/login.html', {'form': form})
     except Exception as e:
         return HttpResponseServerError(e)
 
@@ -113,26 +116,39 @@ def cart_detail(request):
     except Exception as e:
         return HttpResponseServerError(e)
 
-
 def cart_add(request, product_id):
-    user = request.user
-    cart, created = Cart.objects.get_or_create(user=user)
-    product = get_object_or_404(Product, productId=product_id)
-    form = CartItemForm(request.POST)
-    if form.is_valid():
-        cd = form.cleaned_data
-        cart_item = CartItem.objects.create(
-            cart=cart,
-            product=product,
-            quantity=cd['quantity'],
-            price=product.price
-        )
-        return redirect('cart_detail')
-    else:
-        # Handle the case where the form is not valid
-        # You can add an error message to the context and render the template again
-        context = {'product': product, 'form': form}
-        return render(request, 'shopping_web/cart_add.html', context)
+    try:
+        if not request.user.is_authenticated:           
+            return redirect('login')
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        product = get_object_or_404(Product, productId=product_id)
+        form = CartItemForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            cart_item = None
+            cart_items = CartItem.objects.filter(cart=cart, product=product)
+            if cart_items.exists():
+                cart_item = cart_items.first()
+                cart_item.quantity += cd['quantity']
+                cart_item.save()
+            else:
+                cart_item = CartItem.objects.create(
+                    cart=cart,
+                    product=product,
+                    quantity=cd['quantity'],
+                    price=product.price
+                )
+            return redirect('cart_detail')
+        else:
+            
+            context = {'product': product, 'form': form}
+            return render(request, 'shopping_web/cart_add.html', context)
+    except Exception as e:
+        return HttpResponseServerError(e)
+
+
+
+
 
 def cart_remove(request, product_id):
     cart = Cart.objects.get(user=request.user)
