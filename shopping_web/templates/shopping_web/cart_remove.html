@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Remove from Cart</title>
+</head>
+<body>
+    <h1>Remove from Cart</h1>
+    <p>Are you sure you want to remove {{ product }} from your cart?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Remove from Cart</button>
+    </form>
+</body>
+</html>

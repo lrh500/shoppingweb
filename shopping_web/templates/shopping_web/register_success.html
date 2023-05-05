@@ -6,9 +6,6 @@
 <head>
     <meta charset="utf-8">
     <title>Clothes Market</title>
-    <form method="post">
-        {% csrf_token %}
-    </form>
     <style>
         body {
             background-size: 60%;
@@ -64,26 +61,15 @@
             <a href="/">Home</a>
             <a href="/">About</a>
             <a href="/product_list">Product</a>
+            <a href="/login">login</a>
+            <a href="/register">register</a>
         </nav>
     </div>
     <div class="homepage">
         <img src="{% static 'images/homepage.png' %}" class="img-style" alt="image">
     </div>
     <div class="caption">
-        <h1>Welcome to the Clothes market</h1>
-        <h2>Login</h2>
-        <form method="post">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" name="username" id="username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" name="password" id="password" required>
-            </div>
-            <button type="submit">Login</button>
-        </form>
+        <h1>Register Success</h1>
     </div>
     <nav>
         <a href="/">Home</a>

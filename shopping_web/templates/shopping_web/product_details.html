@@ -68,6 +68,7 @@
     </div>
     <div class="caption">
         <h1>Welcome to the Clothes market</h1>
+        {% if product_details %}
         {% for row in product_details %}
         <tr>
             <td>{{ row.gender }}</td>
@@ -77,8 +78,14 @@
             <td>{{ row.colour }}</td>
             <td>{{ row.usage }}</td>
             <td>{{ row.producttitle }}</td>
+            <b><a href='/cart_add/{{row.productId}}'>{{ row.producttitle}}</a></b>
+            <td>{{ row.price }}</td>
         </tr>
         {% endfor %}
+        {% else %}
+        <p>No product details found.</p>
+        {% endif %}
+
     </div>
     <nav>
         <a href="/">Home</a>

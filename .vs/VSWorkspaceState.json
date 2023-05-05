@@ -2,9 +2,13 @@
   "ExpandedNodes": [
     "",
     "\\shopping_web",
+    "\\shopping_web\\management",
+    "\\shopping_web\\management\\commands",
+    "\\shopping_web\\migrations",
     "\\shopping_web\\templates",
-    "\\shopping_web\\templates\\resigstration"
+    "\\shopping_web\\templates\\shopping_web",
+    "\\solo_assessment"
   ],
-  "SelectedNode": "\\shopping_web\\templates\\resigstration\\login.html",
+  "SelectedNode": "\\shopping_web\\views.py",
   "PreviewInSolutionExplorer": false
 }
