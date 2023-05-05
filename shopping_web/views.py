@@ -5,6 +5,8 @@ from django.http import HttpResponseServerError
 from django.views.decorators.http import require_POST
 from .forms import RegisterForm, LoginForm,CartItemForm
 from django.contrib import messages
+from django.db.models import Q
+
 
 def index(request):
     try:
@@ -14,10 +16,42 @@ def index(request):
 
 def product_list(request):
     try:
-        products=Product.objects.all()
-        return render(request,'shopping_web/product_list.html',{'products':products})
+        gender = request.GET.get('gender', '')
+        category = request.GET.get('category', '')
+        sub_category = request.GET.get('sub_category', '')
+        product_type = request.GET.get('product_type', '')
+        colour = request.GET.get('colour', '')
+        usage = request.GET.get('usage', '')
+
+        query = Q()
+        if gender:
+            query &= Q(gender=gender)
+        if category:
+            query &= Q(category=category)
+        if sub_category:
+            query &= Q(subCategory=sub_category)
+        if product_type:
+            query &= Q(productType=product_type)
+        if colour:
+            query &= Q(colour=colour)
+        if usage:
+            query &= Q(usage=usage)
+
+        search_query = request.GET.get('q', '')
+        if search_query:
+            product_details = Product.objects.filter(
+                Q(producttitle__icontains=search_query) | Q(category__icontains=search_query) |
+                Q(subCategory__icontains=search_query) | Q(productType__icontains=search_query) |
+                Q(colour__icontains=search_query) | Q(usage__icontains=search_query)
+            ).filter(query)
+        else:
+            product_details = Product.objects.filter(query)
+
+        return render(request, 'shopping_web/product_list.html', {'product_details': product_details})
     except Exception as e:
         return HttpResponseServerError(e)
+
+
 
 def product_by_name(request,product_id):
     try:

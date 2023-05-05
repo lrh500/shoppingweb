@@ -17,17 +17,21 @@
         </thead>
         <tbody>
             {% for item in cart_items %}
-                <tr>
-                    <td>{{ item.producttitle }}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td>{{ item.total_price }}</td>
-                </tr>
+            <tr>
+                <td>{{ item.product.producttitle }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.total_price }}</td>
+            </tr>
             {% endfor %}
+
+
         </tbody>
     </table>
-{% else %}
+    <h1>Total Price</h1>
+    {{cart_items.total_price}}
+    {% else %}
     <p>Your cart is empty.</p>
-{% endif %}
+    {% endif %}
 
 </body>
 </html>
