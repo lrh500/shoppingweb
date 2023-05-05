@@ -1,0 +1,15 @@
+<html>
+<head>
+    <title>Polar Bear Tracking</title>
+</head>
+<body>
+    <h1>Polar bears Tagged for Tracking</h1>
+    {% for row in products %}
+    <b> {{row.productId }}</b>
+    This is a {{ row.gender }} aged bear
+    {{row.category}}, a {{row.subCategory }} bear, who has has an tag in its' {{ row.productType }} ear, with {{ row.colour}} devise, and was
+    tagged at {{ row.usage }} and {{ row.producttitle }}
+    </p>
+    {% endfor %}
+</body>
+</html>

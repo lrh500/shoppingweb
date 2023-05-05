@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\shopping_web",
+    "\\shopping_web\\data",
+    "\\shopping_web\\management",
+    "\\shopping_web\\management\\commands",
+    "\\shopping_web\\templates",
+    "\\shopping_web\\templates\\shopping_web",
+    "\\solo_assessment",
+    "\\static",
+    "\\static\\images"
+  ],
+  "PreviewInSolutionExplorer": false
+}
