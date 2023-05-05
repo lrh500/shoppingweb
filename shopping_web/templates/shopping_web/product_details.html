@@ -8,10 +8,8 @@
     <title>Clothes Market</title>
     <style>
         body {
-        
-            
             background-size: 60%;
-            background-position:center;
+            background-position: center;
         }
 
         h1 {
@@ -40,18 +38,19 @@
             color: black;
             text-decoration: none;
         }
+
         .img-style {
             width: 100%;
             height: auto;
             position: relative;
         }
+
         .caption {
             position: absolute;
             top: 5%;
             left: 0;
             width: 100%;
         }
-
     </style>
 
 </head>
@@ -69,10 +68,22 @@
     </div>
     <div class="caption">
         <h1>Welcome to the Clothes market</h1>
+        {% for row in product_details %}
+        <tr>
+            <td>{{ row.gender }}</td>
+            <td><b><a href='/check_by_date/{{row.category}}'>{{ row.category }}</a></b></td>
+            <td>{{ row.subCategory }}</td>
+            <td>{{ row.productType }}</td>
+            <td>{{ row.colour }}</td>
+            <td>{{ row.usage }}</td>
+            <td>{{ row.producttitle }}</td>
+        </tr>
+        {% endfor %}
     </div>
     <nav>
         <a href="/">Home</a>
         <a href="/">About</a>
+        <a href="/product_list">Product</a>
     </nav>
 </body>
 
