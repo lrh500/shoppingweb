@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'shopping_web',
     'behave_django',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 MIDDLEWARE = [
