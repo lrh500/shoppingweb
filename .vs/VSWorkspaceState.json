@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\shopping_web"
+    "\\shopping_web",
+    "\\shopping_web\\templates",
+    "\\shopping_web\\templates\\resigstration"
   ],
+  "SelectedNode": "\\shopping_web\\templates\\resigstration\\login.html",
   "PreviewInSolutionExplorer": false
 }

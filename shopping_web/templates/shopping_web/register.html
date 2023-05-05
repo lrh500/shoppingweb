@@ -8,10 +8,8 @@
     <title>Clothes Market</title>
     <style>
         body {
-        
-            
             background-size: 60%;
-            background-position:center;
+            background-position: center;
         }
 
         h1 {
@@ -40,18 +38,19 @@
             color: black;
             text-decoration: none;
         }
+
         .img-style {
             width: 100%;
             height: auto;
             position: relative;
         }
+
         .caption {
             position: absolute;
             top: 5%;
             left: 0;
             width: 100%;
         }
-
     </style>
 
 </head>
@@ -62,8 +61,6 @@
             <a href="/">Home</a>
             <a href="/">About</a>
             <a href="/product_list">Product</a>
-            <a href="/login">login</a>
-            <a href="/register">register</a>
         </nav>
     </div>
     <div class="homepage">
@@ -71,6 +68,41 @@
     </div>
     <div class="caption">
         <h1>Welcome to the Clothes market</h1>
+        <h2>Register</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" name="username" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password1">Password:</label>
+                <input type="password" name="password1" id="password1" required>
+            </div>
+            <div class="form-group">
+                <label for="password2">Confirm password:</label>
+                <input type="password" name="password2" id="password2" required>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+
     </div>
     <nav>
         <a href="/">Home</a>
